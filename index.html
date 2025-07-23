@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module e-learning EN 397:2025</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --petzl-yellow: #FFD900;
+            --petzl-black: #1a1a1a;
+            --petzl-white: #ffffff;
+            --petzl-grey: #333333;
+        }
+
+        body {
+            background-color: var(--petzl-black);
+            color: var(--petzl-white);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #module-container {
+            width: 100%;
+            max-width: 1000px;
+            height: 600px;
+            background-color: var(--petzl-grey);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .slide h1 {
+            color: var(--petzl-yellow);
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        .slide h2 {
+            color: var(--petzl-yellow);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .slide p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            max-width: 80%;
+        }
+
+        .btn {
+            background-color: var(--petzl-yellow);
+            color: var(--petzl-black);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-btn {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+        }
+
+        .slide-content {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            gap: 40px;
+        }
+        
+        .slide-content .text-content {
+            flex-basis: 50%;
+            text-align: left;
+        }
+
+        .slide-content .visual-content {
+            flex-basis: 50%;
+        }
+        
+        /* Interactive elements styles */
+        .type-container {
+            cursor: pointer;
+            border: 2px solid var(--petzl-yellow);
+            border-radius: 10px;
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+        .type-container:hover {
+            background-color: rgba(255, 217, 0, 0.1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: var(--petzl-grey);
+            margin: auto;
+            padding: 30px;
+            border: 1px solid var(--petzl-yellow);
+            width: 60%;
+            max-width: 600px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .close-btn {
+            color: var(--petzl-white);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Flip cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        .card {
+            background-color: transparent;
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .card-front {
+            background-color: var(--petzl-grey);
+            border: 2px solid var(--petzl-yellow);
+        }
+        .card-back {
+            background-color: var(--petzl-yellow);
+            color: var(--petzl-black);
+            transform: rotateY(180deg);
+            font-size: 0.9em;
+        }
+        .card-front h3 { margin: 0; font-size: 1.5em; }
+        .card-front p { margin: 5px 0 0 0; font-size: 1.2em; font-weight: bold; }
+
+        /* Quiz */
+        .quiz-option {
+            background-color: var(--petzl-grey);
+            border: 2px solid var(--petzl-white);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 80%;
+            transition: background-color 0.3s;
+        }
+        .quiz-option:hover {
+            border-color: var(--petzl-yellow);
+        }
+        .quiz-option.correct { background-color: #2E7D32; border-color: #2E7D32; }
+        .quiz-option.incorrect { background-color: #C62828; border-color: #C62828; }
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        /* Marking decoder */
+        .marking-text span {
+            cursor: pointer;
+            text-decoration: underline dotted;
+            transition: color 0.2s;
+        }
+        .marking-text span:hover {
+            color: var(--petzl-yellow);
+        }
+
+        cite {
+            font-size: 0.7em;
+            opacity: 0.6;
+            margin-left: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="module-container">
+
+        <div class="slide active" id="slide-1">
+            <h1>La norme EN 397 fait peau neuve !</h1>
+            <p>Tout comprendre à la version 2025 des casques de protection pour l'industrie.</p>
+            <a href="#" class="btn" onclick="nextSlide()">COMMENCER (15 min)</a>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <div class="text-content">
+                    <h2>Pourquoi ce module ?</h2>
+                    [cite_start]<p>La norme EN 397, qui définit les règles pour les casques industrie en Europe, a été entièrement mise à jour en avril 2025. Elle remplace l'ancienne version de 2012 <cite>[cite: 99]</cite>.</p>
+                    <p>Cette nouvelle version apporte des changements majeurs. Ce module vous donnera les clés pour comprendre l'essentiel.</p>
+                </div>
+                <div class="visual-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200"><path fill="#FFF" d="M50,5A25,20 0 1,1 50,45A25,20 0 1,1 50,5M50,45 C60,65 75,70 80,95 L20,95 C25,70 40,65 50,45Z"></path></svg>
+                </div>
+            </div>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+        
+        <div class="slide" id="slide-3">
+             <h2>LE Grand Changement : Type 1 vs. Type 2</h2>
+             [cite_start]<p>La plus grande nouveauté est l'introduction de deux types de casques pour mieux répondre aux différents risques <cite>[cite: 102]</cite>.</p>
+             <div class="slide-content">
+                 <div class="type-container" onclick="showModal('modal-t1')">
+                     <h3>TYPE 1</h3>
+                     <p>Protection contre les chocs sur le sommet.</p>
+                 </div>
+                 <div class="type-container" onclick="showModal('modal-t2')">
+                     <h3>TYPE 2</h3>
+                     <p>Protection contre les chocs sur le sommet ET en dehors du sommet.</p>
+                 </div>
+             </div>
+             <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+        
+        <div class="slide" id="slide-4">
+             <h2>Type 1 vs. Type 2 : La Jugulaire</h2>
+             <p>Une autre différence clé réside dans la résistance de la jugulaire.</p>
+             <table style="width: 80%; border-collapse: collapse; margin-top: 20px; font-size: 1.1em;" border="1">
+                 <thead style="background-color: var(--petzl-yellow); color: var(--petzl-black);">
+                     <tr><th style="padding: 10px;"></th><th style="padding: 10px;">TYPE 1 (si équipé)</th><th style="padding: 10px;">TYPE 2 (obligatoire)</th></tr>
+                 </thead>
+                 <tbody>
+                     [cite_start]<tr><td style="padding: 10px;"><strong>Jugulaire</strong></td><td style="padding: 10px;">Optionnelle</td><td style="padding: 10px;"><strong>Obligatoire</strong> <cite>[cite: 315]</cite></td></tr>
+                     [cite_start]<tr><td style="padding: 10px;"><strong>Résistance</strong></td><td style="padding: 10px;">Doit résister à > 150 N <cite>[cite: 313][cite_start]</cite></td><td style="padding: 10px;">Doit résister à > 500 N <cite>[cite: 316]</cite></td></tr>
+                 </tbody>
+             </table>
+             <p style="font-size: 0.9em; margin-top: 15px;">La haute résistance du Type 2 assure que le casque reste sur la tête en cas de choc important.</p>
+             <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+
+        <div class="slide" id="slide-5">
+            <h2>Le Socle Obligatoire</h2>
+            <p>Quel que soit leur type, tous les casques certifiés EN 397:2025 doivent passer une série de tests obligatoires.</p>
+            <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 20px;">
+                <div class="type-container" onclick="showModal('modal-req1')"><h3>Absorption des chocs (sommet)</h3></div>
+                <div class="type-container" onclick="showModal('modal-req2')"><h3>Résistance à la pénétration (sommet)</h3></div>
+                <div class="type-container" onclick="showModal('modal-req3')"><h3>Résistance à l'inflammation</h3></div>
+            </div>
+             <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+
+        <div class="slide" id="slide-6">
+            <h2>Quiz Rapide #1</h2>
+            <p>Un collègue travaille sur un échafaudage avec un risque de chute d'outils, mais aussi de se cogner la tête sur les côtés. Quel type de casque lui recommanderiez-vous ?</p>
+            <div id="quiz1">
+                <div class="quiz-option" onclick="checkQuiz(this, false)">A) Type 1</div>
+                <div class="quiz-option" onclick="checkQuiz(this, true)">B) Type 2</div>
+                <div class="quiz-option" onclick="checkQuiz(this, false)">C) Les deux conviennent</div>
+            </div>
+            <div id="feedback1-correct" class="feedback" style="color: #4CAF50;">Exact ! Le Type 2 offre une protection contre les chocs sur le sommet et les côtés, ce qui est idéal dans cette situation.</div>
+            <div id="feedback1-incorrect" class="feedback" style="color: #F44336;">Pas tout à fait. Le Type 2 est plus adapté car il couvre aussi les chocs latéraux, fréquents dans cet environnement.</div>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+
+        <div class="slide" id="slide-7">
+            <h2>Les Options "À la Carte"</h2>
+            <p>La norme propose des protections optionnelles pour des risques spécifiques. Retournez les cartes pour les découvrir !</p>
+            <div class="card-grid">
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front"><h3>Froid Extrême</h3><p>-30°C</p></div>
+                        [cite_start]<div class="card-back"><p>Garantit la performance d'absorption des chocs et de résistance à la pénétration jusqu'à -40°C <cite>[cite: 323, 324]</cite>.</p></div>
+                    </div>
+                </div>
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front"><h3>Chaleur Extrême</h3><p>+150°C</p></div>
+                        [cite_start]<div class="card-back"><p>Garantit les performances jusqu'à +150°C <cite>[cite: 327, 328]</cite>.</p></div>
+                    </div>
+                </div>
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front"><h3>Métal en Fusion</h3><p>MM</p></div>
+                        [cite_start]<div class="card-back"><p>La coque ne doit ni être traversée ni s'enflammer au contact de métal en fusion <cite>[cite: 338]</cite>.</p></div>
+                    </div>
+                </div>
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front"><h3>Pénétration Côtés</h3><p>OCP</p></div>
+                        [cite_start]<div class="card-back"><p>Test optionnel de résistance à la pénétration sur les zones en dehors du sommet <cite>[cite: 452]</cite>.</p></div>
+                    </div>
+                </div>
+                 <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front"><h3>Isolation Électrique</h3><p>⚡</p></div>
+                        [cite_start]<div class="card-back"><p>Protection contre les contacts électriques (selon la norme EN 50365) <cite>[cite: 336]</cite>.</p></div>
+                    </div>
+                </div>
+                 <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front"><h3>ATEX</h3><p>Ex</p></div>
+                        [cite_start]<div class="card-back"><p>Propriétés électrostatiques pour utilisation en atmosphères explosives <cite>[cite: 345]</cite>.</p></div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+        
+        <div class="slide" id="slide-10">
+            <h2>Décoder le Marquage</h2>
+            <p>Comment savoir ce que votre casque peut faire ? Tout est dans le marquage ! [cite_start]<cite>[cite: 454]</cite></p>
+            <div style="background: #2b2b2b; padding: 20px; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 1.4em;">
+                <p class="marking-text">
+                    <span onclick="showModal('modal-m1')">PETZL - VERTEX - 04/2025</span> -
+                    <span onclick="showModal('modal-m2')">EN 397:2025 T2</span> -
+                    <span onclick="showModal('modal-m3')">-30°C</span> -
+                    <span onclick="showModal('modal-m4')">MM</span>
+                </p>
+            </div>
+             <p style="margin-top:20px;">Cliquez sur chaque partie du marquage pour comprendre sa signification.</p>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+
+        <div class="slide" id="slide-11">
+             <h2>Quiz Rapide #2</h2>
+             <p>Un électricien doit travailler sur une installation basse tension. Quel marquage optionnel est essentiel sur son casque ?</p>
+             <div id="quiz2">
+                <div class="quiz-option" onclick="checkQuiz(this, false, 2)">MM</div>
+                <div class="quiz-option" onclick="checkQuiz(this, false, 2)">-40°C</div>
+                <div class="quiz-option" onclick="checkQuiz(this, true, 2)">Le double triangle (isolation électrique)</div>
+            </div>
+            <div id="feedback2-correct" class="feedback" style="color: #4CAF50;">Bravo ! [cite_start]C'est le symbole de la norme EN 50365 pour les casques électriquement isolants <cite>[cite: 1099]</cite>.</div>
+            <div id="feedback2-incorrect" class="feedback" style="color: #F44336;">Incorrect. Le marquage essentiel est le double triangle qui indique une isolation électrique.</div>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+
+        <div class="slide" id="slide-12">
+            <h2>La Notice d'Information : À Lire Absolument !</h2>
+            [cite_start]<p>Le marquage donne l'essentiel, la notice donne les détails cruciaux <cite>[cite: 1103]</cite>.</p>
+            <ul style="text-align: left; max-width: 70%; line-height: 2;">
+                [cite_start]<li>Ne jamais modifier ou peindre son casque sans l'accord du fabricant <cite>[cite: 1112]</cite>.</li>
+                [cite_start]<li>Remplacer un casque après un choc important, même sans dégât visible <cite>[cite: 1125]</cite>.</li>
+                [cite_start]<li>Respecter la durée de vie et les consignes d'entretien <cite>[cite: 1123]</cite>.</li>
+            </ul>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+        
+        <div class="slide" id="slide-13">
+            <h2>En Résumé</h2>
+            <p>Vous avez maintenant les clés de la norme EN 397:2025. Retenons l'essentiel :</p>
+            <div class="slide-content" style="text-align: left; align-items: flex-start; gap: 20px;">
+                <div style="flex-basis: 33%;"><h3>1. Type 1 vs. Type 2</h3><p>La distinction entre protection au sommet (T1) et protection complète (T2) incluant les impacts latéraux.</p></div>
+                <div style="flex-basis: 33%;"><h3>2. Socle + Options</h3><p>Tous les casques ont une base de protection obligatoire. Des options s'y ajoutent pour des risques spécifiques.</p></div>
+                <div style="flex-basis: 33%;"><h3>3. Le Marquage</h3><p>Apprenez à le lire pour choisir le bon casque et connaître ses limites.</p></div>
+            </div>
+            <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
+        </div>
+        
+        <div class="slide" id="slide-14">
+            <h1>Félicitations !</h1>
+            <p>Cette nouvelle norme nous pousse à innover pour proposer des casques toujours plus sûrs et adaptés à vos métiers.</p>
+            <a href="https://www.petzl.com/FR/fr/Professionnel" target="_blank" class="btn">VOIR NOS CASQUES SUR PETZL.COM</a>
+        </div>
+
+    </div>
+
+    [cite_start]<div id="modal-t1" class="modal" onclick="closeModal(event, 'modal-t1')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-t1', true)">&times;</span><h2>Casque de Type 1</h2><p>Ce casque est conçu pour protéger principalement contre les chutes d'objets, en absorbant les chocs sur le sommet du crâne <cite>[cite: 128]</cite>.</p></div></div>
+    <div id="modal-t2" class="modal" onclick="closeModal(event, 'modal-t2')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-t2', true)">&times;</span><h2>Casque de Type 2</h2><p>Ce casque est soumis à des tests d'impact plus élevés sur le sommet, et à des tests supplémentaires sur l'avant, l'arrière et les côtés. [cite_start]Il offre une protection plus complète, notamment en cas de chute de l'utilisateur <cite>[cite: 129]</cite>.</p></div></div>
+    <div id="modal-req1" class="modal" onclick="closeModal(event, 'modal-req1')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req1', true)">&times;</span><h2>Absorption des chocs</h2><p>Un percuteur est lâché sur le casque. [cite_start]La force transmise à la fausse tête ne doit pas dépasser 5,0 kN <cite>[cite: 294]</cite>.</p></div></div>
+    <div id="modal-req2" class="modal" onclick="closeModal(event, 'modal-req2')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req2', true)">&times;</span><h2>Résistance à la pénétration</h2><p>Un percuteur conique est lâché sur le casque. [cite_start]Il ne doit pas entrer en contact avec la fausse tête <cite>[cite: 308]</cite>.</p></div></div>
+    [cite_start]<div id="modal-req3" class="modal" onclick="closeModal(event, 'modal-req3')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req3', true)">&times;</span><h2>Résistance à l'inflammation</h2><p>La coque du casque ne doit pas s'enflammer ni rester incandescente après contact avec une tige chauffée à 650°C <cite>[cite: 320]</cite>.</p></div></div>
+    [cite_start]<div id="modal-m1" class="modal" onclick="closeModal(event, 'modal-m1')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-m1', true)">&times;</span><h2>Infos Fabricant</h2><p>Informations obligatoires : nom du fabricant, modèle, et date de fabrication <cite>[cite: 1083, 1084, 1085]</cite>.</p></div></div>
+    [cite_start]<div id="modal-m2" class="modal" onclick="closeModal(event, 'modal-m2')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-m2', true)">&times;</span><h2>Norme & Type</h2><p>Indique que le casque est conforme à la norme EN 397:2025 et qu'il s'agit d'un Type 2 <cite>[cite: 1082]</cite>.</p></div></div>
+    [cite_start]<div id="modal-m3" class="modal" onclick="closeModal(event, 'modal-m3')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-m3', true)">&times;</span><h2>Option : Très basse température</h2><p>Le casque a réussi les tests optionnels de performance par grand froid, ici -30°C <cite>[cite: 1097]</cite>.</p></div></div>
+    [cite_start]<div id="modal-m4" class="modal" onclick="closeModal(event, 'modal-m4')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-m4', true)">&times;</span><h2>Option : Métal en Fusion</h2><p>Le casque a réussi le test optionnel de résistance aux projections de métal en fusion (marquage "MM") <cite>[cite: 1097]</cite>.</p></div></div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 14;
+
+        function showSlide(slideNumber) {
+            document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+            document.getElementById(`slide-${slideNumber}`).classList.add('active');
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(event, modalId, forceClose = false) {
+             if (event.target.id === modalId || forceClose) {
+                document.getElementById(modalId).style.display = 'none';
+             }
+        }
+        
+        function checkQuiz(option, isCorrect, quizNumber = 1) {
+            const quizContainer = document.getElementById(`quiz${quizNumber}`);
+            if (quizContainer.classList.contains('answered')) return;
+
+            quizContainer.classList.add('answered');
+            if (isCorrect) {
+                option.classList.add('correct');
+                document.getElementById(`feedback${quizNumber}-correct`).style.display = 'block';
+            } else {
+                option.classList.add('incorrect');
+                document.getElementById(`feedback${quizNumber}-incorrect`).style.display = 'block';
+            }
+        }
+
+    </script>
+</body>
+</html>
