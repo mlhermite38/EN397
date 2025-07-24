@@ -188,7 +188,7 @@
                     <p>Cette nouvelle version apporte des changements majeurs. Ce module vous donnera les clés pour comprendre l'essentiel.</p>
                 </div>
                 <div class="visual-content">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200"><path fill="#FFF" d="M50,5A25,20 0 1,1 50,45A25,20 0 1,1 50,5M50,45 C60,65 75,70 80,95 L20,95 C25,70 40,65 50,45Z"></path></svg>
+                    <img src="https://www.petzl.com/sfc/servlet.shepherd/version/download/0681r0000078UqXAAU" alt="Casque Petzl Vertex" style="width: 200px; height: auto;">
                 </div>
             </div>
             <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
@@ -402,24 +402,4 @@
 
         function closeModal(event, modalId, forceClose = false) {
              if (event.target.id === modalId || forceClose) {
-                document.getElementById(modalId).style.display = 'none';
-             }
-        }
-        
-        function checkQuiz(option, isCorrect, quizNumber = 1) {
-            const quizContainer = document.getElementById(`quiz${quizNumber}`);
-            if (quizContainer.classList.contains('answered')) return;
-
-            quizContainer.classList.add('answered');
-            if (isCorrect) {
-                option.classList.add('correct');
-                document.getElementById(`feedback${quizNumber}-correct`).style.display = 'block';
-            } else {
-                option.classList.add('incorrect');
-                document.getElementById(`feedback${quizNumber}-incorrect`).style.display = 'block';
-            }
-        }
-
-    </script>
-</body>
-</html>
+                document.getElementById(modalId).style.display =
