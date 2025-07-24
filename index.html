@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module e-learning EN 397:2025 - V4</title>
+    <title>Module e-learning EN 397:2025 - Version Finale</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -30,7 +30,7 @@
         #module-container {
             width: 100%;
             max-width: 1000px;
-            height: 600px;
+            height: 700px; /* Hauteur augmentée */
             background-color: var(--petzl-grey);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -83,8 +83,8 @@
         }
         .btn:hover { transform: scale(1.05); }
         
-        .nav-btn { position: absolute; bottom: 20px; right: 60px; }
-        .back-btn { position: absolute; bottom: 20px; left: 60px; background-color: #555; color: var(--petzl-white); }
+        .nav-btn { position: absolute; bottom: 40px; right: 60px; } /* Décalé vers le bas */
+        .back-btn { position: absolute; bottom: 40px; left: 60px; background-color: #555; color: var(--petzl-white); } /* Décalé vers le bas */
 
         .slide-content { display: flex; justify-content: space-around; align-items: center; width: 100%; gap: 40px; }
         .slide-content .text-content { flex-basis: 50%; text-align: left; }
@@ -114,7 +114,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 100%;
-            max-width: 700px; /* To keep cards from spreading too far */
+            max-width: 700px; 
             margin: 20px auto 0;
         }
         .card { background-color: transparent; height: 150px; perspective: 1000px; cursor: pointer; }
@@ -125,7 +125,7 @@
         }
         .card-front { background-color: var(--petzl-grey); border: 2px solid var(--petzl-yellow); }
         .card-back { background-color: var(--petzl-yellow); color: var(--petzl-black); transform: rotateY(180deg); font-size: 0.9em; }
-        .card-front h3 { margin: 0; font-size: 1.4em; }
+        .card-front h3 { margin: 0; font-size: 1.2em; } /* Taille de police ajustée pour les longs titres */
         .card-front p { margin: 5px 0 0 0; font-size: 1.2em; font-weight: bold; }
 
         .quiz-option {
@@ -246,8 +246,8 @@
                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Chaleur Extrême</h3><p>+150°C</p></div><div class="card-back"><p>Garantit les performances jusqu'à +150°C.</p></div></div></div>
                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Métal en Fusion</h3><p>MM</p></div><div class="card-back"><p>La coque ne doit ni être traversée ni s'enflammer.</p></div></div></div>
                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Visibilité Améliorée</h3><p>👁️</p></div><div class="card-back"><p>Coque de couleur fluorescente et/ou bandes rétroréfléchissantes pour être mieux vu.</p></div></div></div>
-                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Isolation Électrique</h3><p>⚡</p></div><div class="card-back"><p>Protection contre les contacts électriques (selon la norme EN 50365).</p></div></div></div>
-                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>ATEX</h3><p>Ex</p></div><div class="card-back"><p>Propriétés électrostatiques pour utilisation en atmosphères explosives.</p></div></div></div>
+                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Isolation Électrique</h3><p><img src="https://www.iso.org/obp/graphics/grs/024cfa9d-115d-40b8-b88f-f38b29c66499_200.png" alt="Symbole isolation électrique" style="height: 50px;"></p></div><div class="card-back"><p>Protection contre les contacts électriques (selon la norme EN 50365).</p></div></div></div>
+                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Propriétés Électrostatiques</h3><p><img src="https://www.iso.org/obp/graphics/grs/307614ac-19a1-4f47-a7b6-147799d866d7_200.png" alt="Symbole électrostatique" style="height: 50px;"></p></div><div class="card-back"><p>Pour utilisation en atmosphères explosives (ATEX).</p></div></div></div>
             </div>
             <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
             <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
@@ -283,8 +283,8 @@
                      <tr><td>Pénétration hors sommet</td><td>OCP</td></tr>
                      <tr><td>Visibilité améliorée (jour)</td><td>☀️ (Symbole ou mention)</td></tr>
                      <tr><td>Visibilité améliorée (nuit)</td><td>🌙 (Symbole ou mention)</td></tr>
-                     <tr><td>Propriétés électrostatiques</td><td>Ω (dans un triangle)</td></tr>
-                     <tr><td>Propriétés électriquement isolantes</td><td>⛛ (Double triangle)</td></tr>
+                     <tr><td>Propriétés électrostatiques</td><td style="padding: 2px;"><img src="https://www.iso.org/obp/graphics/grs/307614ac-19a1-4f47-a7b6-147799d866d7_200.png" alt="Symbole électrostatique" style="height: 30px; vertical-align: middle;"></td></tr>
+                     <tr><td>Propriétés électriquement isolantes</td><td style="padding: 2px;"><img src="https://www.iso.org/obp/graphics/grs/024cfa9d-115d-40b8-b88f-f38b29c66499_200.png" alt="Symbole isolation électrique" style="height: 30px; vertical-align: middle;"></td></tr>
                  </tbody>
              </table>
             <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
