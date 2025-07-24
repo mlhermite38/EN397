@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module e-learning EN 397:2025 - V3</title>
+    <title>Module e-learning EN 397:2025 - V4</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -63,6 +63,9 @@
         .slide h1 { color: var(--petzl-yellow); font-size: 2.8em; margin-bottom: 10px; }
         .slide h2 { color: var(--petzl-yellow); font-size: 2em; margin-bottom: 20px; }
         .slide p { font-size: 1.1em; line-height: 1.6; max-width: 90%; }
+        .slide p .clickable { text-decoration: underline dotted; cursor: pointer; }
+        .slide p .clickable:hover { color: var(--petzl-yellow); }
+
 
         .btn {
             background-color: var(--petzl-yellow);
@@ -80,8 +83,8 @@
         }
         .btn:hover { transform: scale(1.05); }
         
-        .nav-btn { position: absolute; bottom: 40px; right: 60px; }
-        .back-btn { position: absolute; bottom: 40px; left: 60px; background-color: #555; color: var(--petzl-white); }
+        .nav-btn { position: absolute; bottom: 20px; right: 60px; }
+        .back-btn { position: absolute; bottom: 20px; left: 60px; background-color: #555; color: var(--petzl-white); }
 
         .slide-content { display: flex; justify-content: space-around; align-items: center; width: 100%; gap: 40px; }
         .slide-content .text-content { flex-basis: 50%; text-align: left; }
@@ -190,7 +193,7 @@
                  </thead>
                  <tbody>
                      <tr><td style="padding: 10px;"><strong>Résistance de la jugulaire</strong></td><td style="padding: 10px;">Doit résister à > 150 N</td><td style="padding: 10px;">Doit résister à > 500 N</td></tr>
-                     <tr><td style="padding: 10px;"><strong>Efficacité du système de rétention</strong></td><td style="padding: 10px;">Non applicable</td><td style="padding: 10px;">Test dynamique : le casque ne doit pas se détacher.</td></tr>
+                     <tr><td style="padding: 10px;"><strong>Efficacité du système de rétention</strong></td><td style="padding: 10px;">Non applicable</td><td style="padding: 10px;">Test dynamique : le casque ne doit pas se désolidariser de la fausse-tête.</td></tr>
                  </tbody>
              </table>
              <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
@@ -216,7 +219,7 @@
                     </ul>
                 </div>
             </div>
-             <p style="font-size: 0.9em; margin-top: 15px;">En plus, tous les casques (T1 & T2) doivent réussir les tests de <strong>résistance à la pénétration</strong> et de <strong>résistance à l'inflammation</strong>.</p>
+             <p style="font-size: 0.9em; margin-top: 15px;">En plus, tous les casques (T1 & T2) doivent réussir les tests de <span class="clickable" onclick="showModal('modal-req-pen')">résistance à la pénétration</span> et de <span class="clickable" onclick="showModal('modal-req-inf')">résistance à l'inflammation</span>.</p>
              <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
              <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
         </div>
@@ -239,12 +242,12 @@
             <h2>Les Options "À la Carte"</h2>
             <p>La norme propose des protections optionnelles pour des risques spécifiques. Retournez les cartes pour les découvrir !</p>
             <div class="card-grid">
-                <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Froid Extrême</h3><p>-30°C</p></div><div class="card-back"><p>Garantit la performance d'absorption et de pénétration jusqu'à -20°C, -30°C ou -40°C.</p></div></div></div>
+                <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Froid Extrême</h3><p>-20°C, -30°C, -40°C</p></div><div class="card-back"><p>Garantit la performance d'absorption et de pénétration jusqu'à -20°C, -30°C ou -40°C.</p></div></div></div>
                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Chaleur Extrême</h3><p>+150°C</p></div><div class="card-back"><p>Garantit les performances jusqu'à +150°C.</p></div></div></div>
                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Métal en Fusion</h3><p>MM</p></div><div class="card-back"><p>La coque ne doit ni être traversée ni s'enflammer.</p></div></div></div>
                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Visibilité Améliorée</h3><p>👁️</p></div><div class="card-back"><p>Coque de couleur fluorescente et/ou bandes rétroréfléchissantes pour être mieux vu.</p></div></div></div>
-                <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Isolation Électrique</h3><p>⚡</p></div><div class="card-back"><p>Protection contre les contacts électriques (selon la norme EN 50365).</p></div></div></div>
-                <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>ATEX</h3><p>Ex</p></div><div class="card-back"><p>Propriétés électrostatiques pour utilisation en atmosphères explosives.</p></div></div></div>
+                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>Isolation Électrique</h3><p>⚡</p></div><div class="card-back"><p>Protection contre les contacts électriques (selon la norme EN 50365).</p></div></div></div>
+                 <div class="card" onclick="this.classList.toggle('flipped')"><div class="card-inner"><div class="card-front"><h3>ATEX</h3><p>Ex</p></div><div class="card-back"><p>Propriétés électrostatiques pour utilisation en atmosphères explosives.</p></div></div></div>
             </div>
             <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
             <a href="#" class="btn nav-btn" onclick="nextSlide()">SUIVANT ></a>
@@ -278,8 +281,10 @@
                      <tr><td>Très haute température</td><td>+150°C</td></tr>
                      <tr><td>Métal en fusion</td><td>MM</td></tr>
                      <tr><td>Pénétration hors sommet</td><td>OCP</td></tr>
-                     <tr><td>Propriétés électriquement isolantes</td><td>Double triangle ⛛</td></tr>
-                     <tr><td>Visibilité améliorée</td><td>(Symbole ou mention)</td></tr>
+                     <tr><td>Visibilité améliorée (jour)</td><td>☀️ (Symbole ou mention)</td></tr>
+                     <tr><td>Visibilité améliorée (nuit)</td><td>🌙 (Symbole ou mention)</td></tr>
+                     <tr><td>Propriétés électrostatiques</td><td>Ω (dans un triangle)</td></tr>
+                     <tr><td>Propriétés électriquement isolantes</td><td>⛛ (Double triangle)</td></tr>
                  </tbody>
              </table>
             <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
@@ -329,7 +334,7 @@
         <div class="slide" id="slide-13">
             <h1>Félicitations !</h1>
             <p>Cette nouvelle norme nous pousse à innover pour proposer des casques toujours plus sûrs et adaptés à vos métiers.</p>
-            <a href="https://www.petzl.com/FR/fr/Professionnel" target="_blank" class="btn">VOIR NOS CASQUES SUR PETZL.COM</a>
+            <a href="https://www.petzl.com/FR/fr/Professionnel/Casques" target="_blank" class="btn">VOIR NOS CASQUES PRO SUR PETZL.COM</a>
             <a href="#" class="btn back-btn" onclick="prevSlide()">PRÉCÉDENT</a>
         </div>
 
@@ -341,6 +346,9 @@
     <div id="modal-req-t1-med" class="modal" onclick="closeModal(event, 'modal-req-t1-med')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req-t1-med', true)">&times;</span><h2>Test : Choc sommet (moyenne énergie)</h2><p>Applicable aux <strong>Types 1 et 2</strong>.</p><ul><li>Percuteur hémisphérique.</li><li>Énergie d'impact : 49 J (équivalent chute de 1m).</li><li>Critère : La force transmise doit être < 5 kN.</li></ul></div></div>
     <div id="modal-req-t2-high" class="modal" onclick="closeModal(event, 'modal-req-t2-high')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req-t2-high', true)">&times;</span><h2>Test : Choc sommet (haute énergie)</h2><p>Applicable au <strong>Type 2 uniquement</strong>.</p><ul><li>Percuteur hémisphérique.</li><li>Énergie d'impact : 98 J (équivalent chute de 2m).</li><li>Critère : La force transmise doit être < 10 kN.</li></ul></div></div>
     <div id="modal-req-t2-off" class="modal" onclick="closeModal(event, 'modal-req-t2-off')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req-t2-off', true)">&times;</span><h2>Test : Chocs hors sommet</h2><p>Applicable au <strong>Type 2 uniquement</strong>.</p><ul><li>Percuteur plat.</li><li>3 points d'impact (avant, côté, arrière).</li><li>Énergie d'impact : 24,5 J (équivalent chute de 0,5m).</li><li>Critère : La force transmise doit être < 10 kN.</li></ul></div></div>
+    <div id="modal-req-pen" class="modal" onclick="closeModal(event, 'modal-req-pen')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req-pen', true)">&times;</span><h2>Résistance à la pénétration</h2><p>Un percuteur conique est lâché pour générer une énergie d'impact de 29,4 J (chute libre de 1m). Il ne doit pas entrer en contact avec la fausse tête.</p></div></div>
+    <div id="modal-req-inf" class="modal" onclick="closeModal(event, 'modal-req-inf')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-req-inf', true)">&times;</span><h2>Résistance à l'inflammation</h2><p>La coque du casque ne doit pas s'enflammer ni rester incandescente après contact avec une tige chauffée à 650°C.</p></div></div>
+
 
     <div id="modal-m1" class="modal" onclick="closeModal(event, 'modal-m1')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-m1', true)">&times;</span><h2>Infos Fabricant</h2><p>Informations obligatoires : nom du fabricant, modèle, et date de fabrication.</p></div></div>
     <div id="modal-m2" class="modal" onclick="closeModal(event, 'modal-m2')"><div class="modal-content"><span class="close-btn" onclick="closeModal(event, 'modal-m2', true)">&times;</span><h2>Norme & Type</h2><p>Indique que le casque est conforme à la norme EN 397:2025 et qu'il s'agit d'un Type 2.</p></div></div>
